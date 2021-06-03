@@ -55,6 +55,9 @@ net = RetinaFace(cfg=cfg)
 print("Printing net...")
 print(net)
 
+if not os.path.exists(save_folder):
+    os.makedirs(save_folder)
+
 if args.resume_net is not None:
     print('Loading resume network...')
     state_dict = torch.load(args.resume_net)

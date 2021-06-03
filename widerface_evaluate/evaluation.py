@@ -280,15 +280,35 @@ def evaluation(pred, gt_path, iou_thresh=0.5):
     print("Hard   Val AP: {}".format(aps[2]))
     print("=================================================")
 
+    return aps[0], aps[1], aps[2]
+
 
 if __name__ == '__main__':
 
     parser = argparse.ArgumentParser()
-    parser.add_argument('-p', '--pred', default="./widerface_txt/")
+    parser.add_argument('-p', '--pred', default="./widerface_txt_mobilenet/")
     parser.add_argument('-g', '--gt', default='./ground_truth/')
 
     args = parser.parse_args()
-    evaluation(args.pred, args.gt)
+    easy_aps = []
+    medium_aps = []
+    hard_aps = []
+    list_folder = os.listdir(args.pred)
+    list_folder.sort()
+    for folder in list_folder:
+        txt_folder_path = os.path.join(args.pred, folder)
+        e, m, h = evaluation(txt_folder_path, args.gt)
+        easy_aps.append(e)
+        medium_aps.append(m)
+        hard_aps.append(h)
+
+    with open(os.path.join(args.pred, "evaluation_res.txt", 'a')) as file:
+        file.write("epoch: {}\n".format(list_folder))
+        file.write("easy: {}\n".format(easy_aps))
+        file.write("medium: {}\n".format(medium_aps))
+        file.write("hard: {}".format(hard_aps))
+
+
 
 
 

@@ -1,0 +1,9 @@
+.DS_Store
+.idea/
+__pycache__/
+*.pyc
+*.pkl
+*/model_ir_se50.pth
+*/IMG_1681.jpeg
+*/*.index
+*.pth
